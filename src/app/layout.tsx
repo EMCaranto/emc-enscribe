@@ -8,6 +8,9 @@ import { Inter } from 'next/font/google'
 // Global Styles
 import '@/styles/globals.css'
 
+// Theme Providers
+import { ThemeProvider } from '@/components/providers/theme-provider'
+
 const font = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -35,8 +38,18 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={font.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={font.className}>
+        <ThemeProvider
+          defaultTheme="system"
+          attribute="class"
+          enableSystem
+          disableTransitionOnChange
+          storageKey="enscribe-theme"
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   )
 }
