@@ -3,6 +3,7 @@ import React from 'react'
 
 // Dependencies
 import { ArrowRightIcon } from 'lucide-react'
+
 // Components
 import { Button } from '@/components/ui/button'
 

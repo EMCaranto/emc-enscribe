@@ -6,8 +6,8 @@ import Image from 'next/image'
 
 // Public
 import imageOne from '../../../../public/images/documents.png'
-import imageDarkOne from '../../../../public/images/documents-dark.png'
 import imageTwo from '../../../../public/images/reading.png'
+import imageDarkOne from '../../../../public/images/documents-dark.png'
 import imageDarkTwo from '../../../../public/images/reading-dark.png'
 
 const Hero = () => {
