@@ -13,6 +13,7 @@ import { useConvexAuth } from 'convex/react'
 // Components
 import Logo from './logo'
 
+import Spinner from '@/components/shared/spinner'
 import ThemeToggler from '@/components/shared/theme-toggler'
 
 import { Button } from '@/components/ui/button'
@@ -41,7 +42,7 @@ const Navbar = () => {
           <>
             <SignInButton mode="modal">
               <Button variant={'ghost'} size={'sm'}>
-                Login
+                Log in
               </Button>
             </SignInButton>
             <SignInButton mode="modal">
