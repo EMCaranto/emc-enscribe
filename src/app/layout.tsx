@@ -8,8 +8,9 @@ import { Inter } from 'next/font/google'
 // Global Styles
 import '@/styles/globals.css'
 
-// Theme Providers
-import { ThemeProvider } from '@/components/providers/theme-provider'
+// Providers
+import { ConvexClientProvider } from '@/providers/convex-provider'
+import { ThemeProvider } from '@/providers/theme-provider'
 
 const font = Inter({ subsets: ['latin'] })
 
@@ -40,15 +41,17 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={font.className}>
-        <ThemeProvider
-          defaultTheme="system"
-          attribute="class"
-          enableSystem
-          disableTransitionOnChange
-          storageKey="enscribe-theme"
-        >
-          {children}
-        </ThemeProvider>
+        <ConvexClientProvider>
+          <ThemeProvider
+            defaultTheme="system"
+            attribute="class"
+            enableSystem
+            disableTransitionOnChange
+            storageKey="enscribe-theme"
+          >
+            {children}
+          </ThemeProvider>
+        </ConvexClientProvider>
       </body>
     </html>
   )
