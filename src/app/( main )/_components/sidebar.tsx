@@ -1,5 +1,5 @@
 // React JS
-import React, { ElementRef, useRef, useState } from 'react'
+import React, { ElementRef, useEffect, useRef, useState } from 'react'
 
 // Next JS
 import { usePathname } from 'next/navigation'
@@ -22,9 +22,81 @@ const Sidebar = () => {
 
   const pathname = usePathname()
 
-  const onClickHandler = () => {}
+  useEffect(() => {
+    if (isMobile) {
+      onCollapseHandler()
+    } else {
+      onResetWidthHandler()
+    }
+  }, [isMobile])
 
-  const onMouseDownHandler = () => {}
+  useEffect(() => {
+    if (isMobile) {
+      onCollapseHandler()
+    }
+  }, [pathname, isMobile])
+
+  const onMouseDownHandler = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    event.preventDefault()
+    event.stopPropagation()
+
+    isResizingRef.current = true
+    document.addEventListener('mousemove', onMouseMoveHandler)
+    document.addEventListener('mouseup', onMouseUpHandler)
+  }
+
+  const onMouseMoveHandler = (event: MouseEvent) => {
+    if (!isResizingRef.current) return
+
+    let newWidth = event.clientX
+
+    if (newWidth < 240) newWidth = 240
+    if (newWidth > 480) newWidth = 480
+
+    if (sidebarRef.current && navbarRef.current) {
+      sidebarRef.current.style.width = `${newWidth}px`
+      navbarRef.current.style.setProperty('left', `${newWidth}px`)
+      navbarRef.current.style.setProperty('width', `calc(100% - ${newWidth}px)`)
+    }
+  }
+
+  const onMouseUpHandler = () => {
+    isResizingRef.current = false
+
+    document.removeEventListener('mousemove', onMouseMoveHandler)
+    document.removeEventListener('mouseup', onMouseUpHandler)
+  }
+
+  const onResetWidthHandler = () => {
+    if (sidebarRef.current && navbarRef.current) {
+      setIsCollapsed(false)
+      setIsResetting(true)
+
+      sidebarRef.current.style.width = isMobile ? '100%' : '240px'
+      navbarRef.current.style.setProperty(
+        'width',
+        isMobile ? '0' : 'calc(100% - 240px)'
+      )
+      navbarRef.current.style.setProperty('left', isMobile ? '100%' : '240px')
+
+      setTimeout(() => setIsResetting(false), 300)
+    }
+  }
+
+  const onCollapseHandler = () => {
+    if (sidebarRef.current && navbarRef.current) {
+      setIsCollapsed(true)
+      setIsResetting(true)
+
+      sidebarRef.current.style.width = '0'
+      navbarRef.current.style.setProperty('width', '100%')
+      navbarRef.current.style.setProperty('left', '0')
+
+      setTimeout(() => setIsResetting(false), 300)
+    }
+  }
 
   return (
     <>
@@ -42,6 +114,7 @@ const Sidebar = () => {
             isMobile && 'opacity-100'
           )}
           role="button"
+          onClick={onCollapseHandler}
         >
           <ChevronLeftIcon className="h-6 w-6" />
         </div>
@@ -53,10 +126,10 @@ const Sidebar = () => {
         </div>
         <div
           className="absolute right-0 top-0 h-full w-1 cursor-ew-resize bg-primary/10 opacity-0 transition group-hover/sidebar:opacity-100"
-          onClick={onClickHandler}
+          onClick={onResetWidthHandler}
           onMouseDown={onMouseDownHandler}
         >
-          {/* Custom Scrollbar Placeholder */}
+          {/* Placeholder */}
         </div>
       </aside>
       <div
@@ -69,7 +142,11 @@ const Sidebar = () => {
       >
         <nav className="w-full bg-transparent px-3 py-2">
           {isCollapsed && (
-            <MenuIcon className="h-6 w-6 text-muted-foreground" role="button" />
+            <MenuIcon
+              className="h-6 w-6 text-muted-foreground"
+              role="button"
+              onClick={onResetWidthHandler}
+            />
           )}
         </nav>
       </div>
