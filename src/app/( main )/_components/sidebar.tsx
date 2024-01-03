@@ -7,9 +7,13 @@ import { usePathname } from 'next/navigation'
 // Dependencies
 import { ChevronLeftIcon, MenuIcon } from 'lucide-react'
 import { useMediaQuery } from 'usehooks-ts'
+import { useQuery } from 'convex/react'
 
 // Components
 import UserSettings from './user-settings'
+
+// Convex
+import { api } from '../../../../convex/_generated/api'
 
 // Libraries
 import { cn } from '@/lib/utils'
@@ -24,6 +28,7 @@ const Sidebar = () => {
   const sidebarRef = useRef<ElementRef<'aside'>>(null)
 
   const pathname = usePathname()
+  const documents = useQuery(api.documents.get)
 
   useEffect(() => {
     if (isMobile) {
@@ -125,7 +130,9 @@ const Sidebar = () => {
           <UserSettings />
         </div>
         <div className="mt-4">
-          <p>Documents</p>
+          {documents?.map((document) => (
+            <p key={document._id}>{document.title}</p>
+          ))}
         </div>
         <div
           className="absolute right-0 top-0 h-full w-1 cursor-ew-resize bg-primary/10 opacity-0 transition group-hover/sidebar:opacity-100"
