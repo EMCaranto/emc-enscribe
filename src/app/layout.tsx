@@ -8,6 +8,9 @@ import { Inter } from 'next/font/google'
 // Global Styles
 import '@/styles/globals.css'
 
+// Dependencies
+import { Toaster } from 'sonner'
+
 // Providers
 import { ConvexClientProvider } from '@/providers/convex-provider'
 import { ThemeProvider } from '@/providers/theme-provider'
@@ -49,6 +52,7 @@ export default function RootLayout({
             disableTransitionOnChange
             storageKey="enscribe-theme"
           >
+            <Toaster position="bottom-center" />
             {children}
           </ThemeProvider>
         </ConvexClientProvider>
