@@ -8,6 +8,9 @@ import { usePathname } from 'next/navigation'
 import { ChevronLeftIcon, MenuIcon } from 'lucide-react'
 import { useMediaQuery } from 'usehooks-ts'
 
+// Components
+import UserSettings from './user-settings'
+
 // Libraries
 import { cn } from '@/lib/utils'
 
@@ -119,7 +122,7 @@ const Sidebar = () => {
           <ChevronLeftIcon className="h-6 w-6" />
         </div>
         <div>
-          <p>Action Item</p>
+          <UserSettings />
         </div>
         <div className="mt-4">
           <p>Documents</p>
