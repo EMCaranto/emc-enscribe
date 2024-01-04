@@ -5,11 +5,19 @@ import React, { ElementRef, useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 
 // Dependencies
-import { ChevronLeftIcon, MenuIcon } from 'lucide-react'
+import {
+  ChevronLeftIcon,
+  MenuIcon,
+  PlusCircleIcon,
+  SearchIcon,
+  SettingsIcon,
+} from 'lucide-react'
+import { toast } from 'sonner'
 import { useMediaQuery } from 'usehooks-ts'
-import { useQuery } from 'convex/react'
+import { useMutation, useQuery } from 'convex/react'
 
 // Components
+import SidebarItem from './sidebar-item'
 import UserSettings from './user-settings'
 
 // Convex
@@ -29,6 +37,7 @@ const Sidebar = () => {
 
   const pathname = usePathname()
   const documents = useQuery(api.documents.get)
+  const create = useMutation(api.documents.create)
 
   useEffect(() => {
     if (isMobile) {
@@ -106,6 +115,16 @@ const Sidebar = () => {
     }
   }
 
+  const onCreateHandler = () => {
+    const promise = create({ title: 'Untitled' })
+
+    toast.promise(promise, {
+      loading: 'Creating a new note...',
+      success: 'New note created!',
+      error: 'Failed to create a new note.',
+    })
+  }
+
   return (
     <>
       <aside
@@ -128,6 +147,22 @@ const Sidebar = () => {
         </div>
         <div>
           <UserSettings />
+          <SidebarItem
+            icon={SearchIcon}
+            label="Search"
+            isSearch
+            onClick={() => {}}
+          />
+          <SidebarItem
+            icon={SettingsIcon}
+            label="Settings"
+            onClick={() => {}}
+          />
+          <SidebarItem
+            icon={PlusCircleIcon}
+            label="Create a note"
+            onClick={onCreateHandler}
+          />
         </div>
         <div className="mt-4">
           {documents?.map((document) => (
