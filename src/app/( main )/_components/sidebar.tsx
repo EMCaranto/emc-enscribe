@@ -14,9 +14,10 @@ import {
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useMediaQuery } from 'usehooks-ts'
-import { useMutation, useQuery } from 'convex/react'
+import { useMutation } from 'convex/react'
 
 // Components
+import DocumentList from './document-list'
 import SidebarItem from './sidebar-item'
 import UserSettings from './user-settings'
 
@@ -36,7 +37,6 @@ const Sidebar = () => {
   const sidebarRef = useRef<ElementRef<'aside'>>(null)
 
   const pathname = usePathname()
-  const documents = useQuery(api.documents.get)
   const create = useMutation(api.documents.create)
 
   useEffect(() => {
@@ -165,9 +165,7 @@ const Sidebar = () => {
           />
         </div>
         <div className="mt-4">
-          {documents?.map((document) => (
-            <p key={document._id}>{document.title}</p>
-          ))}
+          <DocumentList />
         </div>
         <div
           className="absolute right-0 top-0 h-full w-1 cursor-ew-resize bg-primary/10 opacity-0 transition group-hover/sidebar:opacity-100"

@@ -6,6 +6,9 @@ import React from 'react'
 // Dependencies
 import { LucideIcon, ChevronDownIcon, ChevronRightIcon } from 'lucide-react'
 
+// Components
+import { Skeleton } from '@/components/ui/skeleton'
+
 // Convex
 import { Id } from '../../../../convex/_generated/dataModel'
 
@@ -39,6 +42,13 @@ const SidebarItem = ({
 }: SidebarItemProps) => {
   const ChevronIcon = expanded ? ChevronDownIcon : ChevronRightIcon
 
+  const onExpandHandler = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    event.stopPropagation()
+    onExpand?.()
+  }
+
   return (
     <div
       className={cn(
@@ -55,7 +65,7 @@ const SidebarItem = ({
         <div
           className="mr-1 h-full rounded-sm hover:bg-neutral-300 dark:bg-neutral-600"
           role="button"
-          onClick={() => {}}
+          onClick={onExpandHandler}
         >
           <ChevronIcon className="h-4 w-4 shrink-0 text-muted-foreground/50" />
         </div>
@@ -71,8 +81,30 @@ const SidebarItem = ({
           <span className="text-xs">CTRL + K</span>
         </kbd>
       )}
+      {
+        !!id && <div>
+          
+        </div>
+      }
     </div>
   )
 }
 
 export default SidebarItem
+
+// Skeleton
+SidebarItem.Skeleton = function SidebarItemSkeleton({
+  level,
+}: {
+  level?: number
+}) {
+  return (
+    <div
+      className="flex gap-x-2 py-1"
+      style={{ paddingLeft: level ? `${level * 12 + 25}px` : '12px' }}
+    >
+      <Skeleton className="h-4 w-4 " />
+      <Skeleton className="h-4 w-1/3" />
+    </div>
+  )
+}
