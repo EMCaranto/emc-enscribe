@@ -3,14 +3,25 @@
 // React JS
 import React from 'react'
 
+// Next JS
+import { useRouter } from 'next/navigation'
+
 // Dependencies
-import { LucideIcon, ChevronDownIcon, ChevronRightIcon } from 'lucide-react'
+import {
+  LucideIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  PlusIcon,
+} from 'lucide-react'
+import { toast } from 'sonner'
+import { useMutation } from 'convex/react'
 
 // Components
 import { Skeleton } from '@/components/ui/skeleton'
 
 // Convex
 import { Id } from '../../../../convex/_generated/dataModel'
+import { api } from '../../../../convex/_generated/api'
 
 // Libraries
 import { cn } from '@/lib/utils'
@@ -40,7 +51,33 @@ const SidebarItem = ({
   onExpand,
   onClick,
 }: SidebarItemProps) => {
+  const create = useMutation(api.documents.create)
+  const router = useRouter()
+
   const ChevronIcon = expanded ? ChevronDownIcon : ChevronRightIcon
+
+  const onCreateHandler = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    event.stopPropagation()
+
+    if (!id) return
+
+    const promise = create({ title: 'Untitled', parentDocument: id }).then(
+      (documentId) => {
+        if (!expanded) {
+          onExpand?.()
+        }
+        // router.push(`/documents/${documentId}`)
+      }
+    )
+
+    toast.promise(promise, {
+      loading: 'Creating a new note...',
+      success: 'New note created!',
+      error: 'Failed to create a new note.',
+    })
+  }
 
   const onExpandHandler = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -81,11 +118,17 @@ const SidebarItem = ({
           <span className="text-xs">CTRL + K</span>
         </kbd>
       )}
-      {
-        !!id && <div>
-          
+      {!!id && (
+        <div className="ml-auto flex items-center gap-x-2">
+          <div
+            className="ml-auto h-full rounded-sm opacity-0 hover:bg-neutral-300 group-hover:opacity-100 dark:hover:bg-neutral-600"
+            role="button"
+            onClick={onCreateHandler}
+          >
+            <PlusIcon className="h-4 w-4 text-muted-foreground" />
+          </div>
         </div>
-      }
+      )}
     </div>
   )
 }
