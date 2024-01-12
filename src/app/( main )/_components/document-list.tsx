@@ -62,16 +62,16 @@ const DocumentList = ({ parentDocumentId, level = 0 }: DocumentListProps) => {
 
   return (
     <>
-      <p
+      <div
         className={cn(
-          'hidden text-sm font-medium text-muted-foreground/80',
+          'hidden py-2 text-sm font-medium text-muted-foreground/80',
           expanded && 'last:block',
           level === 0 && 'hidden'
         )}
         style={{ paddingLeft: level ? `${level * 12 + 25}px` : undefined }}
       >
-        Empty Note
-      </p>
+        <span>Empty</span>
+      </div>
       {documents.map((document) => (
         <div key={document._id}>
           <SidebarItem
