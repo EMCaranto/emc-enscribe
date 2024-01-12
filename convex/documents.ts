@@ -125,7 +125,7 @@ export const onArchiveDocument = mutation({
   },
 })
 
-export const onRestoreDocument = mutation({
+export const onDeleteDocument = mutation({
   args: { id: v.id('documents') },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity()
@@ -146,6 +146,45 @@ export const onRestoreDocument = mutation({
       throw new Error('Unauthorized')
     }
 
+    const document = await ctx.db.delete(args.id)
+
+    return document
+  },
+})
+
+export const onRestoreDocument = mutation({
+  args: { id: v.id('documents') },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+
+    if (!identity) {
+      throw new Error('Unauthenticated')
+    }
+
+    const userId = identity.subject
+
+    const existingDocument = await ctx.db.get(args.id)
+
+    const options: Partial<Doc<'documents'>> = {
+      isArchived: false,
+    }
+
+    if (!existingDocument) {
+      throw new Error('Existing document not found')
+    }
+
+    if (existingDocument.userId !== userId) {
+      throw new Error('Unauthorized')
+    }
+
+    if (existingDocument.parentDocument) {
+      const parentDoc = await ctx.db.get(existingDocument.parentDocument)
+
+      if (parentDoc?.isArchived) {
+        options.parentDocument = undefined
+      }
+    }
+
     const recursiveRestore = async (documentId: Id<'documents'>) => {
       const childDoc = await ctx.db
         .query('documents')
@@ -160,18 +199,6 @@ export const onRestoreDocument = mutation({
         })
 
         await recursiveRestore(child._id)
-      }
-    }
-
-    const options: Partial<Doc<'documents'>> = {
-      isArchived: false,
-    }
-
-    if (existingDocument.parentDocument) {
-      const parentDoc = await ctx.db.get(existingDocument.parentDocument)
-
-      if (parentDoc?.isArchived) {
-        options.parentDocument = undefined
       }
     }
 
