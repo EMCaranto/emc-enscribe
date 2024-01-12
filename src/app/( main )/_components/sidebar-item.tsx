@@ -46,7 +46,7 @@ interface SidebarItemProps {
   level?: number
   isSearch?: boolean
   onExpand?: () => void
-  onClick: () => void
+  onClick?: () => void
 }
 
 const SidebarItem = ({

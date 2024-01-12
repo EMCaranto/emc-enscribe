@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 
 // Dependencies
 import {
+  ArchiveIcon,
   ChevronLeftIcon,
   MenuIcon,
   PlusCircleIcon,
@@ -20,6 +21,12 @@ import { useMutation } from 'convex/react'
 import DocumentList from './document-list'
 import SidebarItem from './sidebar-item'
 import UserSettings from './user-settings'
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 
 // Convex
 import { api } from '../../../../convex/_generated/api'
@@ -166,6 +173,17 @@ const Sidebar = () => {
         </div>
         <div className="mt-4">
           <DocumentList />
+          <Popover>
+            <PopoverTrigger className="mt-4 w-full">
+              <SidebarItem icon={ArchiveIcon} label="Archive" />
+            </PopoverTrigger>
+            <PopoverContent
+              className="w-72 p-0"
+              side={isMobile ? 'bottom' : 'right'}
+            >
+              {/** Trash Box */}
+            </PopoverContent>
+          </Popover>
         </div>
         <div
           className="absolute right-0 top-0 h-full w-1 cursor-ew-resize bg-primary/10 opacity-0 transition group-hover/sidebar:opacity-100"
