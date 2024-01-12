@@ -70,7 +70,7 @@ const DocumentList = ({ parentDocumentId, level = 0 }: DocumentListProps) => {
         )}
         style={{ paddingLeft: level ? `${level * 12 + 25}px` : undefined }}
       >
-        <span>Empty</span>
+        {level > 0 && <span>Empty</span>}
       </div>
       {documents.map((document) => (
         <div key={document._id}>
