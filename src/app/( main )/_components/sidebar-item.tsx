@@ -12,11 +12,21 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
   PlusIcon,
+  MoreHorizontalIcon,
+  Trash2Icon,
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useMutation } from 'convex/react'
+import { useUser } from '@clerk/clerk-react'
 
 // Components
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { Skeleton } from '@/components/ui/skeleton'
 
 // Convex
@@ -51,10 +61,28 @@ const SidebarItem = ({
   onExpand,
   onClick,
 }: SidebarItemProps) => {
+  const { user } = useUser()
+  const archive = useMutation(api.documents.onArchiveDocument)
   const create = useMutation(api.documents.create)
   const router = useRouter()
 
   const ChevronIcon = expanded ? ChevronDownIcon : ChevronRightIcon
+
+  const onArchiveHandler = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    event.stopPropagation()
+
+    if (!id) return
+
+    const promise = archive({ id }).then(() => router.push('/documents'))
+
+    toast.promise(promise, {
+      loading: 'Archiving note...',
+      success: 'Note has been archived!',
+      error: 'Failed to archive note.',
+    })
+  }
 
   const onCreateHandler = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -120,6 +148,34 @@ const SidebarItem = ({
       )}
       {!!id && (
         <div className="ml-auto flex items-center gap-x-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              onClick={(event) => event.stopPropagation()}
+              asChild
+            >
+              <div
+                className="ml-auto h-full rounded-sm opacity-0 hover:bg-neutral-300 group-hover:opacity-100 dark:hover:bg-neutral-600"
+                role="button"
+              >
+                <MoreHorizontalIcon className="h-4 w-4 text-muted-foreground" />
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-60"
+              align="start"
+              side="right"
+              forceMount
+            >
+              <DropdownMenuItem onClick={onArchiveHandler}>
+                <Trash2Icon className="mr-2 h-4 w-4" />
+                <span>Delete</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <div className="p-2 text-xs text-muted-foreground">
+                Last edited by: {user?.fullName}
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <div
             className="ml-auto h-full rounded-sm opacity-0 hover:bg-neutral-300 group-hover:opacity-100 dark:hover:bg-neutral-600"
             role="button"
