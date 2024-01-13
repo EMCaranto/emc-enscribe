@@ -18,6 +18,7 @@ import { useMediaQuery } from 'usehooks-ts'
 import { useMutation } from 'convex/react'
 
 // Components
+import ArchivedBox from './archive-box'
 import DocumentList from './document-list'
 import SidebarItem from './sidebar-item'
 import UserSettings from './user-settings'
@@ -181,7 +182,7 @@ const Sidebar = () => {
               className="w-72 p-0"
               side={isMobile ? 'bottom' : 'right'}
             >
-              {/** Trash Box */}
+              <ArchivedBox />
             </PopoverContent>
           </Popover>
         </div>
