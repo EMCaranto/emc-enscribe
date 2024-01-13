@@ -76,7 +76,34 @@ const ArchivedBox = () => {
     )
   }
 
-  return <div>ArchivedBox</div>
+  return (
+    <div className="text-sm">
+      <div className="flex items-center gap-x-1 p-2">
+        <SearchIcon className="h-4 w-4" />
+        <Input
+          className="h-7 bg-secondary px-2 focus-visible:ring-transparent"
+          placeholder="Filter by title..."
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+        />
+      </div>
+      <div className="mt-2 p-1">
+        <p className="hidden pb-2 text-center text-xs text-muted-foreground last:block">
+          No document found
+        </p>
+        {filteredDoc?.map((document) => (
+          <div
+            className="flex w-full items-center justify-between rounded-sm text-sm text-primary hover:bg-primary/5"
+            role="button"
+            key={document._id}
+            onClick={() => onClickHandler(document._id)}
+          >
+            <span className='flex'>{document.title}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
 }
 
 export default ArchivedBox
