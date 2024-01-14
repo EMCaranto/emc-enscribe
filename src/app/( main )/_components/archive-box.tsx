@@ -98,7 +98,24 @@ const ArchivedBox = () => {
             key={document._id}
             onClick={() => onClickHandler(document._id)}
           >
-            <span className='flex'>{document.title}</span>
+            <span className="flex">{document.title}</span>
+            <div className="flex items-center">
+              <div
+                className="rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600"
+                role="button"
+                onClick={(event) => onRestoreHandler(event, document._id)}
+              >
+                <Undo2Icon className="h-4 w-4 text-muted-foreground" />
+              </div>
+              <ConfirmModal onConfirm={() => onDeleteHandler(document._id)}>
+                <div
+                  className="rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600"
+                  role="button"
+                >
+                  <Trash2Icon className="h-4 w-4 text-muted-foreground" />
+                </div>
+              </ConfirmModal>
+            </div>
           </div>
         ))}
       </div>
