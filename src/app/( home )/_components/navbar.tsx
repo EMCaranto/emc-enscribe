@@ -26,6 +26,7 @@ import { cn } from '@/lib/utils'
 
 const Navbar = () => {
   const { isAuthenticated, isLoading } = useConvexAuth()
+
   const scrolled = useScroll()
 
   return (

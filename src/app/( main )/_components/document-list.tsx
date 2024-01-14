@@ -28,6 +28,7 @@ interface DocumentListProps {
 
 const DocumentList = ({ parentDocumentId, level = 0 }: DocumentListProps) => {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({})
+
   const params = useParams()
   const router = useRouter()
 

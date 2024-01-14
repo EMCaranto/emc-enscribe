@@ -40,12 +40,14 @@ const Sidebar = () => {
 
   const [isCollapsed, setIsCollapsed] = useState(isMobile)
   const [isResetting, setIsResetting] = useState(false)
-  const isResizingRef = useRef(false)
+
+  const pathname = usePathname()
+
+  const resizingRef = useRef(false)
   const navbarRef = useRef<ElementRef<'div'>>(null)
   const sidebarRef = useRef<ElementRef<'aside'>>(null)
 
-  const pathname = usePathname()
-  const create = useMutation(api.documents.create)
+  const onCreateDoc = useMutation(api.documents.onCreateDocument)
 
   useEffect(() => {
     if (isMobile) {
@@ -53,6 +55,7 @@ const Sidebar = () => {
     } else {
       onResetWidthHandler()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile])
 
   useEffect(() => {
@@ -67,13 +70,13 @@ const Sidebar = () => {
     event.preventDefault()
     event.stopPropagation()
 
-    isResizingRef.current = true
+    resizingRef.current = true
     document.addEventListener('mousemove', onMouseMoveHandler)
     document.addEventListener('mouseup', onMouseUpHandler)
   }
 
   const onMouseMoveHandler = (event: MouseEvent) => {
-    if (!isResizingRef.current) return
+    if (!resizingRef.current) return
 
     let newWidth = event.clientX
 
@@ -88,7 +91,7 @@ const Sidebar = () => {
   }
 
   const onMouseUpHandler = () => {
-    isResizingRef.current = false
+    resizingRef.current = false
 
     document.removeEventListener('mousemove', onMouseMoveHandler)
     document.removeEventListener('mouseup', onMouseUpHandler)
@@ -124,7 +127,7 @@ const Sidebar = () => {
   }
 
   const onCreateHandler = () => {
-    const promise = create({ title: 'Untitled' })
+    const promise = onCreateDoc({ title: 'Untitled' })
 
     toast.promise(promise, {
       loading: 'Creating a new note...',

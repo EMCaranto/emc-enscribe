@@ -24,10 +24,10 @@ import imageDarkOne from '../../../../../public/images/empty-dark.png'
 
 const DocumentsPage = () => {
   const { user } = useUser()
-  const create = useMutation(api.documents.create)
+  const onCreateDoc = useMutation(api.documents.onCreateDocument)
 
   const onCreateHandler = () => {
-    const promise = create({ title: 'Untitled' })
+    const promise = onCreateDoc({ title: 'Untitled' })
 
     toast.promise(promise, {
       loading: 'Creating a new note...',

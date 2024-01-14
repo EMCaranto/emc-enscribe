@@ -28,10 +28,6 @@ import {
 import { useSearch } from '@/hooks/use-search'
 
 const SearchCommand = () => {
-  const [isMounted, setIsMounted] = useState(false)
-  const { user } = useUser()
-  const documents = useQuery(api.documents.getSearch)
-
   return <div>SearchCommand</div>
 }
 

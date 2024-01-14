@@ -62,9 +62,11 @@ const SidebarItem = ({
   onClick,
 }: SidebarItemProps) => {
   const { user } = useUser()
-  const archive = useMutation(api.documents.onArchiveDocument)
-  const create = useMutation(api.documents.create)
+
   const router = useRouter()
+
+  const onArchiveDoc = useMutation(api.documents.onArchiveDocument)
+  const onCreateDoc = useMutation(api.documents.onCreateDocument)
 
   const ChevronIcon = expanded ? ChevronDownIcon : ChevronRightIcon
 
@@ -75,7 +77,7 @@ const SidebarItem = ({
 
     if (!id) return
 
-    const promise = archive({ id }).then(() => router.push('/documents'))
+    const promise = onArchiveDoc({ id }).then(() => router.push('/documents'))
 
     toast.promise(promise, {
       loading: 'Archiving note...',
@@ -91,7 +93,7 @@ const SidebarItem = ({
 
     if (!id) return
 
-    const promise = create({ title: 'Untitled', parentDocument: id }).then(
+    const promise = onCreateDoc({ title: 'Untitled', parentDocument: id }).then(
       (documentId) => {
         if (!expanded) {
           onExpand?.()
