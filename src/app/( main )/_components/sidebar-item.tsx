@@ -201,11 +201,11 @@ SidebarItem.Skeleton = function SidebarItemSkeleton({
 }) {
   return (
     <div
-      className="flex gap-x-2 py-1"
+      className="flex items-center py-2"
       style={{ paddingLeft: level ? `${level * 12 + 25}px` : '12px' }}
     >
-      <Skeleton className="h-4 w-4 " />
-      <Skeleton className="h-4 w-1/3" />
+      <Skeleton className="h-4 w-4" />
+      <Skeleton className="h-4 w-1/2" />
     </div>
   )
 }
