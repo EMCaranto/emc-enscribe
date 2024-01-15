@@ -68,26 +68,28 @@ const SearchCommand = () => {
   return (
     <CommandDialog open={isOpen} onOpenChange={onClose}>
       <CommandInput placeholder={`Search ${user?.fullName}'s Enscribe`} />
-      <CommandList>
+      <CommandList className="py-1">
         <CommandEmpty>
-          <span>No result found.</span>
+          <span className="text-muted-foreground">No result found.</span>
         </CommandEmpty>
-        <CommandGroup heading="Documents">
-          {getSearchDoc?.map((document) => (
-            <CommandItem
-              key={document._id}
-              title={document.title}
-              value={document.title}
-              onSelect={onSelectHandler}
-            >
-              {document.icon ? (
-                <span className="mr-2 text-lg">{document.icon}</span>
-              ) : (
-                <FileIcon className="mr-2 h-4 w-4" />
-              )}
-              <span>{document.title}</span>
-            </CommandItem>
-          ))}
+        <CommandGroup className="space-y-2" heading="Documents">
+          <div className="space-y-0.5">
+            {getSearchDoc?.map((document) => (
+              <CommandItem
+                key={document._id}
+                title={document.title}
+                value={document.title}
+                onSelect={onSelectHandler}
+              >
+                {document.icon ? (
+                  <span className="mr-2 text-lg">{document.icon}</span>
+                ) : (
+                  <FileIcon className="mr-2 h-4 w-4" />
+                )}
+                <span>{document.title}</span>
+              </CommandItem>
+            ))}
+          </div>
         </CommandGroup>
       </CommandList>
     </CommandDialog>
