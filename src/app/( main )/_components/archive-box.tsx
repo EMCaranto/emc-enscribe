@@ -12,8 +12,8 @@ import { toast } from 'sonner'
 import { useMutation, useQuery } from 'convex/react'
 
 // Components
-import Spinner from '@/components/shared/spinner'
-import { ConfirmModal } from '@/components/shared/modal/confirm-modal'
+import Spinner from '@/components/global/spinner'
+import { ConfirmModal } from '@/components/global/modal/confirm-modal'
 
 import { Input } from '@/components/ui/input'
 

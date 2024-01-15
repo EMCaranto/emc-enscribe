@@ -13,8 +13,8 @@ import { useConvexAuth } from 'convex/react'
 // Components
 import Logo from './logo'
 
-import Spinner from '@/components/shared/spinner'
-import ThemeToggler from '@/components/shared/theme-toggler'
+import Spinner from '@/components/global/spinner'
+import ThemeToggler from '@/components/global/theme-toggler'
 
 import { Button } from '@/components/ui/button'
 

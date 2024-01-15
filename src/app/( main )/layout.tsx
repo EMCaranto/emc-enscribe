@@ -12,7 +12,8 @@ import { useConvexAuth } from 'convex/react'
 // Components
 import Sidebar from './_components/sidebar'
 
-import Spinner from '@/components/shared/spinner'
+import SearchCommand from '@/components/global/search-command'
+import Spinner from '@/components/global/spinner'
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, isLoading } = useConvexAuth()
@@ -32,7 +33,10 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex h-full dark:bg-neutral-900">
       <Sidebar />
-      <main className="h-full flex-1 overflow-y-auto">{children}</main>
+      <main className="h-full flex-1 overflow-y-auto">
+        <SearchCommand />
+        {children}
+      </main>
     </div>
   )
 }

@@ -12,7 +12,7 @@ import { SignInButton } from '@clerk/clerk-react'
 import { useConvexAuth } from 'convex/react'
 
 // Components
-import Spinner from '@/components/shared/spinner'
+import Spinner from '@/components/global/spinner'
 
 import { Button } from '@/components/ui/button'
 
