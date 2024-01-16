@@ -2,7 +2,7 @@
 import React, { ElementRef, useEffect, useRef, useState } from 'react'
 
 // Next JS
-import { usePathname } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 
 // Dependencies
 import {
@@ -20,6 +20,7 @@ import { useMutation } from 'convex/react'
 // Components
 import ArchivedBox from './archive-box'
 import DocumentList from './document-list'
+import Navbar from './navbar'
 import SidebarItem from './sidebar-item'
 import UserSettings from './user-settings'
 
@@ -45,6 +46,7 @@ const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(isMobile)
   const [isResetting, setIsResetting] = useState(false)
 
+  const params = useParams()
   const pathname = usePathname()
 
   const search = useSearch()
@@ -212,15 +214,22 @@ const Sidebar = () => {
         )}
         ref={navbarRef}
       >
-        <nav className="w-full bg-transparent px-3 py-2">
-          {isCollapsed && (
-            <MenuIcon
-              className="h-6 w-6 text-muted-foreground"
-              role="button"
-              onClick={onResetWidthHandler}
-            />
-          )}
-        </nav>
+        {!!params.documentId ? (
+          <Navbar
+            isCollapsed={isCollapsed}
+            onResetWidth={onResetWidthHandler}
+          />
+        ) : (
+          <nav className="w-full bg-transparent px-3 py-2">
+            {isCollapsed && (
+              <MenuIcon
+                className="h-6 w-6 text-muted-foreground"
+                role="button"
+                onClick={onResetWidthHandler}
+              />
+            )}
+          </nav>
+        )}
       </div>
     </>
   )
