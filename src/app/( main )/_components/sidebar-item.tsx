@@ -130,7 +130,7 @@ const SidebarItem = ({
     >
       {!!id && (
         <div
-          className="mr-1 h-full rounded-sm hover:bg-neutral-300 dark:bg-neutral-600"
+          className="mr-1 h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"
           role="button"
           onClick={onExpandHandler}
         >
@@ -201,7 +201,7 @@ SidebarItem.Skeleton = function SidebarItemSkeleton({
 }) {
   return (
     <div
-      className="flex items-center py-2"
+      className="flex items-center gap-x-2 py-2"
       style={{ paddingLeft: level ? `${level * 12 + 25}px` : '12px' }}
     >
       <Skeleton className="h-4 w-4" />

@@ -32,6 +32,10 @@ import {
 // Convex
 import { api } from '../../../../convex/_generated/api'
 
+// Hooks
+import { useSearch } from '@/hooks/use-search'
+import { useSettings } from '@/hooks/use-settings'
+
 // Libraries
 import { cn } from '@/lib/utils'
 
@@ -42,6 +46,9 @@ const Sidebar = () => {
   const [isResetting, setIsResetting] = useState(false)
 
   const pathname = usePathname()
+
+  const search = useSearch()
+  const settings = useSettings()
 
   const resizingRef = useRef(false)
   const navbarRef = useRef<ElementRef<'div'>>(null)
@@ -162,12 +169,12 @@ const Sidebar = () => {
             icon={SearchIcon}
             label="Search"
             isSearch
-            onClick={() => {}}
+            onClick={search.onOpen}
           />
           <SidebarItem
             icon={SettingsIcon}
             label="Settings"
-            onClick={() => {}}
+            onClick={settings.onOpen}
           />
           <SidebarItem
             icon={PlusCircleIcon}

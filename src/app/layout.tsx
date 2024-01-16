@@ -13,6 +13,7 @@ import { Toaster } from 'sonner'
 
 // Providers
 import { ConvexClientProvider } from '@/providers/convex-provider'
+import { ModalProvider } from '@/providers/modal-provider'
 import { ThemeProvider } from '@/providers/theme-provider'
 
 const font = Inter({ subsets: ['latin'] })
@@ -53,6 +54,7 @@ export default function RootLayout({
             storageKey="enscribe-theme"
           >
             <Toaster position="bottom-center" />
+            <ModalProvider />
             {children}
           </ThemeProvider>
         </ConvexClientProvider>
