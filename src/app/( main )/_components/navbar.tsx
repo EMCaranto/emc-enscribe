@@ -10,6 +10,9 @@ import { useParams } from 'next/navigation'
 import { MenuIcon } from 'lucide-react'
 import { useQuery } from 'convex/react'
 
+// Components
+import Title from './title'
+
 // Convex
 import { Id } from '../../../../convex/_generated/dataModel'
 import { api } from '../../../../convex/_generated/api'
@@ -44,7 +47,9 @@ const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
             onClick={onResetWidth}
           />
         )}
-        <div className="flex w-full items-center justify-between">Navbar</div>
+        <div className="flex w-full items-center justify-between">
+          <Title initialData={getDocId} />
+        </div>
       </nav>
     </>
   )
