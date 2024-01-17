@@ -34,7 +34,11 @@ const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
   }
 
   if (getDocId === undefined) {
-    return <p>Loading</p>
+    return (
+      <nav className="items- flex w-full bg-background px-3 py-2 dark:bg-neutral-900">
+        <Title.Skeleton />
+      </nav>
+    )
   }
 
   return (
