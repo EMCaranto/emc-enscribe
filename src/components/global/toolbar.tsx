@@ -28,6 +28,7 @@ const Toolbar = ({ initialData, preview }: ToolbarProps) => {
 
   const inputRef = useRef<ElementRef<'textarea'>>(null)
 
+  const onRemoveIcon = useMutation(api.documents.onRemoveIcon)
   const onUpdateDoc = useMutation(api.documents.onUpdateDocument)
 
   const enableInput = () => {
@@ -43,6 +44,19 @@ const Toolbar = ({ initialData, preview }: ToolbarProps) => {
 
   const disableInput = () => {
     setIsEditing(false)
+  }
+
+  const onIconSelectHandler = (icon: string) => {
+    onUpdateDoc({
+      id: initialData._id,
+      icon,
+    })
+  }
+
+  const onRemoveIconHandler = () => {
+    onRemoveIcon({
+      id: initialData._id,
+    })
   }
 
   const onInputHandler = (value: string) => {
@@ -67,7 +81,7 @@ const Toolbar = ({ initialData, preview }: ToolbarProps) => {
     <div className="group relative pl-14">
       {!!initialData.icon && !preview && (
         <div className="group/icon flex items-center gap-x-2 pt-6">
-          <IconPicker onChange={() => {}}>
+          <IconPicker onChange={onIconSelectHandler}>
             <p className="text-6xl transition hover:opacity-75">
               {initialData.icon}
             </p>
@@ -76,7 +90,7 @@ const Toolbar = ({ initialData, preview }: ToolbarProps) => {
             className=" rounded-full text-xs text-muted-foreground opacity-0 transition group-hover/icon:opacity-100"
             variant={'outline'}
             size={'icon'}
-            onClick={() => {}}
+            onClick={onRemoveIconHandler}
           >
             <XCircleIcon className="h-4 w-4" />
           </Button>
@@ -87,7 +101,7 @@ const Toolbar = ({ initialData, preview }: ToolbarProps) => {
       )}
       <div className="flex items-center gap-x-1 py-4 opacity-0 group-hover:opacity-100">
         {!initialData.icon && !preview && (
-          <IconPicker onChange={() => {}} asChild>
+          <IconPicker onChange={onIconSelectHandler} asChild>
             <Button
               className="text-xs text-muted-foreground"
               variant={'outline'}
