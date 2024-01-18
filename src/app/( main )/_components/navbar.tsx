@@ -37,8 +37,11 @@ const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
 
   if (getDocId === undefined) {
     return (
-      <nav className="items- flex w-full bg-background px-3 py-2 dark:bg-neutral-900">
+      <nav className="items- flex w-full justify-between bg-background px-3 py-2 dark:bg-neutral-900">
         <Title.Skeleton />
+        <div className="flex items-center gap-x-2">
+          <Menu.Skeleton />
+        </div>
       </nav>
     )
   }
