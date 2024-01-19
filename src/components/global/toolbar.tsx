@@ -17,16 +17,21 @@ import { Button } from '@/components/ui/button'
 // Convex
 import { api } from '../../../convex/_generated/api'
 
+// Hooks
+import { useAddCover } from '@/hooks/use-add-cover'
+
 interface ToolbarProps {
   initialData: Doc<'documents'>
   preview?: boolean
 }
 
 const Toolbar = ({ initialData, preview }: ToolbarProps) => {
-  const [title, setTitle] = useState(initialData.title || 'Untitled')
+  const [title, setTitle] = useState(initialData.title)
   const [isEditing, setIsEditing] = useState(false)
 
   const inputRef = useRef<ElementRef<'textarea'>>(null)
+
+  const coverImage = useAddCover()
 
   const onRemoveIcon = useMutation(api.documents.onRemoveIcon)
   const onUpdateDoc = useMutation(api.documents.onUpdateDocument)
@@ -117,7 +122,7 @@ const Toolbar = ({ initialData, preview }: ToolbarProps) => {
             className="text-xs text-muted-foreground"
             variant={'outline'}
             size={'sm'}
-            onClick={() => {}}
+            onClick={coverImage.onOpen}
           >
             <ImagePlusIcon className="mr-2 h-4 w-4" />
             Add Cover Image
@@ -134,7 +139,10 @@ const Toolbar = ({ initialData, preview }: ToolbarProps) => {
           onKeyDown={onKeyDownHandler}
         />
       ) : (
-        <div className="break-words pb-3 text-5xl font-bold text-neutral-700 outline-none dark:text-neutral-300">
+        <div
+          className="break-words pb-3 text-5xl font-bold text-neutral-700 outline-none dark:text-neutral-300"
+          onClick={enableInput}
+        >
           <span>{initialData.title}</span>
         </div>
       )}

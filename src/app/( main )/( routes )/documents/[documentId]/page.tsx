@@ -34,7 +34,7 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
 
   return (
     <div className="pb-40">
-      <div className="mx-auto md:max-w-3xl lg:max-w-4xl">
+      <div className="mx-auto pt-20 md:max-w-3xl lg:max-w-4xl">
         <Toolbar initialData={getDocId} />
       </div>
     </div>
