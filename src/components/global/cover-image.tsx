@@ -14,6 +14,7 @@ import { useMutation } from 'convex/react'
 
 // Components
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 
 // Convex
 import { Id } from '../../../convex/_generated/dataModel'
@@ -89,3 +90,8 @@ const CoverImage = ({ url, preview }: CoverImageProps) => {
 }
 
 export default CoverImage
+
+// Skeleton
+CoverImage.Skeleton = function CoverImageSkeleton() {
+  return <Skeleton className="h-[12vh] w-full" />
+}
