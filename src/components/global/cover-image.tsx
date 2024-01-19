@@ -24,6 +24,7 @@ import { useAddCover } from '@/hooks/use-add-cover'
 
 // Libraries
 import { cn } from '@/lib/utils'
+import { useEdgeStore } from '@/lib/edgestore'
 
 interface CoverImageProps {
   url?: string
@@ -31,12 +32,20 @@ interface CoverImageProps {
 }
 
 const CoverImage = ({ url, preview }: CoverImageProps) => {
+  const { edgestore } = useEdgeStore()
+
   const addCoverImage = useAddCover()
   const params = useParams()
 
   const onRemoveCoverImage = useMutation(api.documents.onRemoveCoverImage)
 
-  const onRemoveHandler = () => {
+  const onRemoveHandler = async () => {
+    if (url) {
+      await edgestore.publicFiles.delete({
+        url: url,
+      })
+    }
+
     onRemoveCoverImage({
       id: params.documentId as Id<'documents'>,
     })
@@ -59,7 +68,7 @@ const CoverImage = ({ url, preview }: CoverImageProps) => {
             className="text-xs text-muted-foreground"
             variant={'outline'}
             size={'sm'}
-            onClick={addCoverImage.onOpen}
+            onClick={() => addCoverImage.onReplace(url)}
           >
             <ImageIcon className="mr-2 h-4 w-4" />
             Change Cover
