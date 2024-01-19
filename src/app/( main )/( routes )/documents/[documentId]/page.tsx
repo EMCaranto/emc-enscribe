@@ -1,14 +1,16 @@
 'use client'
 
 // React JS
-import React from 'react'
+import React, { useMemo } from 'react'
+
+// Next JS
+import dynamic from 'next/dynamic'
 
 // Dependencies
 import { useMutation, useQuery } from 'convex/react'
 
 // Components
 import CoverImage from '@/components/global/cover-image'
-import Editor from '@/components/global/editor'
 import Toolbar from '@/components/global/toolbar'
 
 import { Skeleton } from '@/components/ui/skeleton'
@@ -24,6 +26,14 @@ interface DocumentIdPageProps {
 }
 
 const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
+  const Editor = useMemo(
+    () =>
+      dynamic(() => import('@/components/global/editor'), {
+        ssr: false,
+      }),
+    []
+  )
+
   const getDocId = useQuery(api.documents.getDocumentById, {
     documentId: params.documentId,
   })

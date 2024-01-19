@@ -2,7 +2,7 @@
 import React, { ElementRef, useEffect, useRef, useState } from 'react'
 
 // Next JS
-import { useParams, usePathname } from 'next/navigation'
+import { useParams, usePathname, useRouter } from 'next/navigation'
 
 // Dependencies
 import {
@@ -48,6 +48,7 @@ const Sidebar = () => {
 
   const params = useParams()
   const pathname = usePathname()
+  const router = useRouter()
 
   const search = useSearch()
   const settings = useSettings()
@@ -136,7 +137,9 @@ const Sidebar = () => {
   }
 
   const onCreateHandler = () => {
-    const promise = onCreateDoc({ title: 'Untitled' })
+    const promise = onCreateDoc({ title: 'Untitled' }).then((documentId) =>
+      router.push(`/documents/${documentId}`)
+    )
 
     toast.promise(promise, {
       loading: 'Creating a new note...',

@@ -6,6 +6,8 @@ import React from 'react'
 // Next JS
 import Image from 'next/image'
 
+import { useRouter } from 'next/navigation'
+
 // Dependencies
 import { PlusCircleIcon } from 'lucide-react'
 import { toast } from 'sonner'
@@ -24,10 +26,15 @@ import imageDarkOne from '../../../../../public/images/empty-dark.png'
 
 const DocumentsPage = () => {
   const { user } = useUser()
+
+  const router = useRouter()
+
   const onCreateDoc = useMutation(api.documents.onCreateDocument)
 
   const onCreateHandler = () => {
-    const promise = onCreateDoc({ title: 'Untitled' })
+    const promise = onCreateDoc({ title: 'Untitled' }).then((documentId) =>
+      router.push(`/documents/${documentId}`)
+    )
 
     toast.promise(promise, {
       loading: 'Creating a new note...',
