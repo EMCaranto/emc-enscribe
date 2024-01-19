@@ -11,6 +11,9 @@ import '@/styles/globals.css'
 // Dependencies
 import { Toaster } from 'sonner'
 
+// Libraries
+import { EdgeStoreProvider } from '@/lib/edgestore'
+
 // Providers
 import { ConvexClientProvider } from '@/providers/convex-provider'
 import { ModalProvider } from '@/providers/modal-provider'
@@ -46,17 +49,19 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={font.className}>
         <ConvexClientProvider>
-          <ThemeProvider
-            defaultTheme="system"
-            attribute="class"
-            enableSystem
-            disableTransitionOnChange
-            storageKey="enscribe-theme"
-          >
-            <Toaster position="bottom-center" />
-            <ModalProvider />
-            {children}
-          </ThemeProvider>
+          <EdgeStoreProvider>
+            <ThemeProvider
+              defaultTheme="system"
+              attribute="class"
+              enableSystem
+              disableTransitionOnChange
+              storageKey="enscribe-theme"
+            >
+              <Toaster position="bottom-center" />
+              <ModalProvider />
+              {children}
+            </ThemeProvider>
+          </EdgeStoreProvider>
         </ConvexClientProvider>
       </body>
     </html>
