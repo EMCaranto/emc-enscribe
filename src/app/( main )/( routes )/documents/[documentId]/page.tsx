@@ -7,6 +7,7 @@ import React from 'react'
 import { useQuery } from 'convex/react'
 
 // Components
+import CoverImage from '@/components/global/cover-image'
 import Toolbar from '@/components/global/toolbar'
 
 // Convex
@@ -34,6 +35,7 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
 
   return (
     <div className="pb-40">
+      <CoverImage url={getDocId.coverImage} />
       <div className="mx-auto pt-20 md:max-w-3xl lg:max-w-4xl">
         <Toolbar initialData={getDocId} />
       </div>
