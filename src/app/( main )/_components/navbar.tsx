@@ -13,6 +13,7 @@ import { useQuery } from 'convex/react'
 // Components
 import ArchiveBanner from './archive-banner'
 import Menu from './menu'
+import Publish from './publish'
 import Title from './title'
 
 // Convex
@@ -59,6 +60,7 @@ const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
         <div className="flex w-full items-center justify-between">
           <Title initialData={getDocId} />
           <div className="flex items-center gap-x-2">
+            <Publish initialData={getDocId} />
             <Menu documentId={getDocId._id} />
           </div>
         </div>

@@ -140,7 +140,7 @@ const SidebarItem = ({
       {documentIcon ? (
         <div className="mr-2 shrink-0 text-lg">{documentIcon}</div>
       ) : (
-        <Icon className="mr-2 h-4 shrink-0 text-muted-foreground" />
+        <Icon className="mr-2 h-4 w-4 shrink-0 text-muted-foreground" />
       )}
       <span className="truncate">{label}</span>
       {isSearch && (

@@ -1,3 +1,5 @@
+'use client'
+
 // React JS
 import React from 'react'
 
