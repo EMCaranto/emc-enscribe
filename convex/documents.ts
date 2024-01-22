@@ -30,12 +30,6 @@ export const getDocumentById = query({
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity()
 
-    if (!identity) {
-      throw new Error('Unauthenticated')
-    }
-
-    const userId = identity.subject
-
     const document = await ctx.db.get(args.documentId)
 
     if (!document) {
@@ -45,6 +39,12 @@ export const getDocumentById = query({
     if (document.isPublished && !document.isArchived) {
       return document
     }
+
+    if (!identity) {
+      throw new Error('Unauthenticated')
+    }
+
+    const userId = identity.subject
 
     if (document.userId !== userId) {
       throw new Error('Unauthorized')
